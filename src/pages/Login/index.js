@@ -1,10 +1,11 @@
 import React from 'react';
 
 import { Title } from './styled';
+import { Container } from '../../styles/GlobalStyles';
 
 function Login() {
   return (
-    <>
+    <Container>
       <Title>Login Page</Title>
       <p>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus,
@@ -12,7 +13,7 @@ function Login() {
         consequatur commodi reiciendis veritatis nihil et explicabo expedita
         distinctio officia?
       </p>
-    </>
+    </Container>
   );
 }
 

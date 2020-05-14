@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Colors from '../config/colors';
 
 export default createGlobalStyle`
@@ -10,8 +10,8 @@ export default createGlobalStyle`
   }
   body {
     font-family: sans-serif;
-    background-color: ${Colors.primary};
-    color: ${Colors.primary};
+    background-color: ${Colors.primaryDark};
+    color: ${Colors.primaryDark};
   }
 
   html, body, root {
@@ -36,4 +36,13 @@ export default createGlobalStyle`
   ul {
     list-style: none;
   }
+`;
+
+export const Container = styled.section`
+  max-width: 360px;
+  background-color: #ffffff;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;

@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import Colors from '../config/colors';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default createGlobalStyle`
   * {
@@ -36,6 +37,16 @@ export default createGlobalStyle`
   ul {
     list-style: none;
   }
+
+  /* Customização de cores do Toastify */
+  body .Toastify .Toastify__toast-container .Toastify__toast--success {
+    background-color: ${Colors.success};
+  }
+
+  body .Toastify .Toastify__toast-container .Toastify__toast--error {
+    background-color: ${Colors.error};
+  }
+
 `;
 
 export const Container = styled.section`

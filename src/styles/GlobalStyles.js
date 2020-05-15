@@ -19,7 +19,7 @@ export default createGlobalStyle`
     height: 100%;
   }
 
-  button: {
+  button {
     cursor: pointer;
     background-color: ${Colors.primary};
     border: none;

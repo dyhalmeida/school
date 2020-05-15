@@ -1,5 +1,6 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+import CustomRoute from './CustomRoute';
 
 import Login from '../pages/Login';
 import Page404 from '../pages/Page404';
@@ -7,8 +8,8 @@ import Page404 from '../pages/Page404';
 function Routes() {
   return (
     <Switch>
-      <Route path="/login" exact component={Login} />
-      <Route path="*" component={Page404} />
+      <CustomRoute path="/login" exact component={Login} />
+      <CustomRoute path="*" component={Page404} />
     </Switch>
   );
 }

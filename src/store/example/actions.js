@@ -1,8 +1,17 @@
 import * as types from '../types';
 
-export function buttonClicked() {
+export function request() {
   return {
-    type: types.BUTTON_CLICKED,
-    payload: { name: 'Diego Almeida', email: 'dyhalmeida@gmail.com' },
+    type: types.REQUEST,
+  };
+}
+export function success() {
+  return {
+    type: types.SUCESS,
+  };
+}
+export function failure() {
+  return {
+    type: types.FAILURE,
   };
 }

@@ -12,7 +12,7 @@ function Login() {
     e.preventDefault();
 
     // Dispara uma ação para o reducer
-    dispath(exampleActions.buttonClicked());
+    dispath(exampleActions.request());
   }
 
   return (

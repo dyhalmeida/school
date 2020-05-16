@@ -7,12 +7,23 @@ const initialSate = {
 
 export default function (state = initialSate, action) {
   switch (action.type) {
-    case types.BUTTON_CLICKED: {
-      const newState = { ...state, buttonClicked: !state.buttonClicked };
-      return newState;
+    case types.REQUEST: {
+      console.log('Fazendo requisição');
+      return state;
     }
 
-    default:
+    case types.SUCESS: {
+      console.log('Requisição realizada com sucesso');
+      return { ...state, buttonClicked: !state.buttonClicked };
+    }
+
+    case types.FAILURE: {
+      console.log('Falha na requisição');
       return state;
+    }
+
+    default: {
+      return state;
+    }
   }
 }

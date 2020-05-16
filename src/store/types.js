@@ -1,1 +1,3 @@
-export const BUTTON_CLICKED = 'BUTTON_CLICKED';
+export const REQUEST = 'REQUEST';
+export const SUCESS = 'SUCESS';
+export const FAILURE = 'FAILURE';

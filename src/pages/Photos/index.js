@@ -1,12 +1,12 @@
 import React from 'react';
 import { Container } from '../../styles/GlobalStyles';
 
-function Login() {
+function Photos() {
   return (
     <Container>
-      <h1>Login Page</h1>
+      <h1>Photos Page</h1>
     </Container>
   );
 }
 
-export default Login;
+export default Photos;

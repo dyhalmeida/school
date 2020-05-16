@@ -1,27 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import { FaHome, FaSignInAlt, FaUserAlt } from 'react-icons/fa';
 import { Nav } from './styled';
 
 function Header() {
-  const buttonClicked = useSelector(
-    (state) => state.exampleReducer.buttonClicked
-  );
   return (
     <>
       <Nav>
         <Link to="/">
           <FaHome size={24} />
         </Link>
-        <Link to="/user">
+        <Link to="/register">
           <FaUserAlt size={24} />
         </Link>
         <Link to="/login">
           <FaSignInAlt size={24} />
         </Link>
-        {buttonClicked ? 'Botão clicado' : 'Botão não clicado'}
       </Nav>
     </>
   );

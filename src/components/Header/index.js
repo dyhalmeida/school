@@ -6,7 +6,9 @@ import { FaHome, FaSignInAlt, FaUserAlt } from 'react-icons/fa';
 import { Nav } from './styled';
 
 function Header() {
-  const buttonClicked = useSelector((state) => state.buttonClicked);
+  const buttonClicked = useSelector(
+    (state) => state.exampleReducer.buttonClicked
+  );
   return (
     <>
       <Nav>

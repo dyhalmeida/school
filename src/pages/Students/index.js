@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaUserCircle, FaEdit, FaWindowClose } from 'react-icons/fa';
-import { get } from 'lodash';
-import { Container } from '../../styles/GlobalStyles';
 
+import { get } from 'lodash';
 import axios from '../../services/axios';
+
+import { Container } from '../../styles/GlobalStyles';
 import { Title, StudentsContainer, ProfilePicture } from './styled';
 
 function Students() {

@@ -21,7 +21,6 @@ function Register() {
     if (name.length <= 3 || name.length > 30) {
       error = true;
       toast.error('Nome deve ter entre 3 e 30 caracteres');
-      return;
     }
 
     if (!isEmail(email)) {
@@ -32,7 +31,6 @@ function Register() {
     if (password.length <= 3 || password.length > 8) {
       error = true;
       toast.error('Senha deve ter entre 3 e 10 caracteres');
-      return;
     }
 
     if (error) return;

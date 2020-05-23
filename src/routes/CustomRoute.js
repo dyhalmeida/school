@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 /**
  * Instalar prop-types para validasr as propriedades do componente
@@ -8,7 +9,7 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function CustomRoute({ component: Component, restricted, ...rest }) {
-  const isLoggedIn = false;
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   /** Verifica se a rota é restrita e se o usuário não está logado */
   if (restricted && !isLoggedIn) {

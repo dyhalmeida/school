@@ -1,11 +1,12 @@
 import { all } from 'redux-saga/effects';
 
 /** import dos sagas */
-import exampleSaga from './example/sagas';
+// import exampleSaga from './example/sagas';
+import auth from './auth/sagas';
 
 export default function* rootSaga() {
   return yield all([
-    exampleSaga,
+    auth,
     // exampleSaga2,
     // exampleSaga2,
   ]);

@@ -11,7 +11,7 @@ const initialSate = {
 export default function (state = initialSate, action) {
   switch (action.type) {
     case types.LOGIN_REQUEST: {
-      return state;
+      return { ...state, isLoading: true };
     }
     case types.LOGIN_SUCCESS: {
       return {
@@ -19,6 +19,7 @@ export default function (state = initialSate, action) {
         isLoggedIn: true,
         token: action.payload.token,
         user: action.payload.user,
+        isLoading: false,
       };
     }
     case types.LOGIN_FAILURE: {

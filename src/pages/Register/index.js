@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { isEmail } from 'validator';
-import { get } from 'lodash';
-import axios from '../../services/axios';
-import history from '../../services/history';
+import * as actions from '../../store/auth/actions';
 
 import { Container } from '../../styles/GlobalStyles';
 import { Form } from './styled';
 import Loading from '../../components/Loading';
 
 function Register() {
+  const { id, name: userName, email: userEmail } = useSelector(
+    (state) => state.auth.user
+  );
+
+  const { isLoading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!id) return;
+    setName(userName);
+    setEmail(userEmail);
+  }, [id, userName, userEmail]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -30,37 +41,27 @@ function Register() {
       toast.error('E-mail inválido');
     }
 
-    if (password.length <= 3 || password.length > 8) {
+    if (!id && (password.length <= 3 || password.length > 8)) {
       error = true;
       toast.error('Senha deve ter entre 3 e 10 caracteres');
     }
 
     if (error) return;
 
-    setIsLoading(true);
-
-    try {
-      await axios.post('/users', {
+    dispatch(
+      actions.registerRequest({
+        id,
         name,
         email,
         password,
-      });
-      toast.success('Conta criada com sucesso');
-      setIsLoading(false);
-      /** Roteia para página de login */
-      history.push('/login');
-    } catch (err) {
-      // const status = get(err, 'response.status', 0);
-      const errors = get(err, 'response.data.errors', []);
-      setIsLoading(false);
-      errors.forEach((errorText) => toast.error(errorText));
-    }
+      })
+    );
   }
 
   return (
     <Container>
       <Loading isLoading={isLoading} />
-      <h1>Crie sua conta</h1>
+      <h1>{id ? 'Editar dados' : 'Crie sua conta'}</h1>
       <Form onSubmit={handleSubmit}>
         <label htmlFor="name">
           Nome:
@@ -95,7 +96,7 @@ function Register() {
             placeholder="Sua senha"
           />
         </label>
-        <button type="submit">Criar minha conta</button>
+        <button type="submit">{id ? 'Salvar' : 'Criar minha conta'}</button>
       </Form>
     </Container>
   );

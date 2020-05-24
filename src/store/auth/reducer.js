@@ -22,8 +22,26 @@ export default function (state = initialSate, action) {
         isLoading: false,
       };
     }
+
     case types.LOGIN_FAILURE: {
       return { ...initialSate };
+    }
+
+    case types.REGISTER_REQUEST: {
+      return { ...state, isLoading: true };
+    }
+
+    case types.REGISTER_UPDATED_SUCCESS: {
+      const { name, email } = action.payload;
+      return { ...state, isLoading: false, user: { name, email } };
+    }
+
+    case types.REGISTER_CREATED_SUCCESS: {
+      return { ...state, isLoading: false };
+    }
+
+    case types.REGISTER_FAILURE: {
+      return { ...state, isLoading: false };
     }
 
     default: {

@@ -27,13 +27,13 @@ function persistReHyDrate({ payload }) {
 }
 // eslint-disable-next-line consistent-return
 function* registerRequest({ payload }) {
-  const { id, name, email, password = undefined } = payload;
+  const { id, name, email, password } = payload;
   try {
     if (id) {
       yield call(axios.put, '/users', {
         email,
         name,
-        password,
+        password: password || undefined,
       });
       toast.success('Conta alterada com sucesso');
       yield put(actions.registerUpdatedSuccess({ name, email, password }));

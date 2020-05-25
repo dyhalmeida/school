@@ -25,6 +25,12 @@ function persistReHyDrate({ payload }) {
   if (!token) return;
   axios.defaults.headers.Authorization = `Bearer ${token}`;
 }
+
+function loginFailure({ payload }) {
+  const token = get(payload, 'auth.token', '');
+  axios.defaults.headers.Authorization = `Bearer ${token}`;
+}
+
 // eslint-disable-next-line consistent-return
 function* registerRequest({ payload }) {
   const { id, name, email, password } = payload;
@@ -74,6 +80,6 @@ export default all([
   takeLatest(types.LOGIN_REQUEST, loginRequest),
   takeLatest(types.REGISTER_REQUEST, registerRequest),
   takeLatest(types.PERSIST_REHYDRATE, persistReHyDrate),
-  // takeLatest(types.REQUEST, exampleRequest2),
+  takeLatest(types.LOGIN_FAILURE, loginFailure),
   // takeLatest(types.REQUEST, exampleRequest3),
 ]);

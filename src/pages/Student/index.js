@@ -4,19 +4,22 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { toast } from 'react-toastify';
 import { isEmail } from 'validator';
+import { FaUserCircle, FaEdit } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { Container } from '../../styles/GlobalStyles';
-import { Form } from './styled';
+import { Form, ProfilePicture, Title } from './styled';
 import Loading from '../../components/Loading';
 import axios from '../../services/axios';
 import history from '../../services/history';
 import * as actions from '../../store/auth/actions';
 
 function Student({ match }) {
-  const id = get(match, 'params.id', 0);
+  const id = get(match, 'params.id', '');
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [photo, setPhoto] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -25,7 +28,8 @@ function Student({ match }) {
       try {
         setIsLoading(true);
         const { data } = await axios.get(`/students/${id}`);
-        // const File = get(data, 'Files[0].url', '');
+        const file = get(data, 'Files[0].url', '');
+        setPhoto(file);
         setName(data.name);
         setEmail(data.email);
         setIsLoading(false);
@@ -91,7 +95,17 @@ function Student({ match }) {
   return (
     <Container>
       <Loading isLoading={isLoading} />
-      <h1>{id ? 'Editar Aluno' : 'Novo Aluno'}</h1>
+      <Title>{id ? 'Editar Aluno' : 'Novo Aluno'}</Title>
+
+      {id && (
+        <ProfilePicture>
+          {photo ? <img src={photo} alt={name} /> : <FaUserCircle size={180} />}
+          <Link to={`/photos/${id}`}>
+            <FaEdit />
+          </Link>
+        </ProfilePicture>
+      )}
+
       <Form onSubmit={handleSubmit}>
         <label htmlFor="name">
           Nome:

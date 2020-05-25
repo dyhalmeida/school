@@ -1,12 +1,126 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import { get } from 'lodash';
+import { toast } from 'react-toastify';
+import { isEmail } from 'validator';
 import { Container } from '../../styles/GlobalStyles';
+import { Form } from './styled';
+import Loading from '../../components/Loading';
+import axios from '../../services/axios';
+import history from '../../services/history';
+import * as actions from '../../store/auth/actions';
 
-function Student() {
+function Student({ match }) {
+  const id = get(match, 'params.id', 0);
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!id) return;
+    (async () => {
+      try {
+        setIsLoading(true);
+        const { data } = await axios.get(`/students/${id}`);
+        // const File = get(data, 'Files[0].url', '');
+        setName(data.name);
+        setEmail(data.email);
+        setIsLoading(false);
+      } catch (error) {
+        // const status = get(error, 'response.status', 0);
+        const errors = get(error, 'response.errors', []);
+        if (errors.length > 0) {
+          errors.map((errorMessage) => toast.error(errorMessage));
+          setIsLoading(false);
+          history.push('/');
+        }
+      }
+    })();
+  }, [id]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let formError = false;
+
+    if (name.length < 3 || name.length > 150) {
+      formError = true;
+      toast.error('Nome deve conter entre 3 e 150 caracteres');
+    }
+
+    if (!isEmail(email)) {
+      formError = true;
+      toast.error('E-mail inválido');
+    }
+
+    if (formError) return;
+
+    try {
+      setIsLoading(true);
+      if (id) {
+        await axios.put(`/students/${id}`, {
+          name,
+          email,
+        });
+        setIsLoading(false);
+        toast.success('Aluno(a) editado com sucesso');
+      } else {
+        await axios.post('/students', { name, email });
+        setIsLoading(false);
+        toast.success('Aluno(a) criado com sucesso');
+        history.push('/');
+      }
+    } catch (error) {
+      const status = get(error, 'response.status', 0);
+      const errors = get(error, 'response.data.errors', []);
+      setIsLoading(false);
+      if (errors.length > 0) {
+        errors.map((errorMessage) => toast.error(errorMessage));
+      } else {
+        toast.error('Erro desconhecido');
+      }
+
+      if (status === 401) {
+        dispatch(actions.loginFailure());
+      }
+    }
+  };
+
   return (
     <Container>
-      <h1>Student Page</h1>
+      <Loading isLoading={isLoading} />
+      <h1>{id ? 'Editar Aluno' : 'Novo Aluno'}</h1>
+      <Form onSubmit={handleSubmit}>
+        <label htmlFor="name">
+          Nome:
+          <input
+            type="text"
+            placeholder="Nome do aluno"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </label>
+        <label htmlFor="email">
+          E-mail:
+          <input
+            type="email"
+            placeholder="E-mail do aluno"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </label>
+        <button type="submit">{id ? 'Salvar' : 'Cadastrar'}</button>
+      </Form>
     </Container>
   );
 }
+
+Student.propTypes = {
+  match: PropTypes.shape({}).isRequired,
+};
 
 export default Student;

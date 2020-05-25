@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Title = styled.h1`
   ::after {
@@ -31,4 +32,9 @@ export const StudentsContainer = styled.div`
   div + div {
     border-top: 1px solid #eee;
   }
+`;
+
+export const NewStudent = styled(Link)`
+  display: block;
+  padding: 20px 0 10px 0;
 `;

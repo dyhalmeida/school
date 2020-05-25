@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import axios from '../../services/axios';
 
 import { Container } from '../../styles/GlobalStyles';
-import { Title, StudentsContainer, ProfilePicture } from './styled';
+import { Title, StudentsContainer, ProfilePicture, NewStudent } from './styled';
 import Loading from '../../components/Loading';
 
 function Students() {
@@ -65,6 +65,7 @@ function Students() {
     <Container>
       <Loading isLoading={isLoading} />
       <Title>Students</Title>
+      <NewStudent to="/student">Novo Aluno</NewStudent>
       <StudentsContainer>
         {students.map((student, index) => (
           <div key={String(student.id)}>
